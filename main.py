@@ -21,10 +21,18 @@ LINE = (
 )
 
 
+def valid_line(line: str) -> bool:
+    """The gate: 1 to 200 characters, a single line, not only whitespace."""
+    return 1 <= len(line) <= 200 and "\n" not in line and line.strip() != ""
+
+
 def main() -> None:
+    assert valid_line(LINE), "entry line must be 1-200 chars, single line"
     path = Path("/output/entry.txt")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(LINE + "\n", encoding="utf-8")
+    # Read back and confirm the file holds exactly the line we meant.
+    assert path.read_text(encoding="utf-8") == LINE + "\n"
 
 
 if __name__ == "__main__":
